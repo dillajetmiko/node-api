@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Dental App</title>
+  <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div class="app">
+    <header>
+      <nav class="navbar navbar-dark bg-secondary d-flex">
+        <span class="navbar-brand mb-0 h1">Dental App Dilla</span>
+        <div>
+          <a class="text-light mr-3" href="/employees">Employees</a>
+          <a class="text-light mr-3" href="/departments">Departments</a>
+        </div>
+      </nav>
+    </header>
+
+    <div class="col-md-8 m-auto pt-4">
+      <form action="/employees" method="post">
+        <div class="row">
+          <div class="col-12 form-group">
+            <label for="name">name</label>
+            <input type="text" id="name" name="name" class="form-control" required />
+          </div>
+          <div class="col-12 form-group">
+            <label for="surname">surname</label>
+            <input type="text" id="surname" name="surname" class="form-control" required />
+          </div>
+          <div class="col-12 form-group">
+            <label for="department">Choose a department:</label>
+            <select class="form-control" name="department" id="department">
+              <% departments.forEach(department=> { %>
+                <option value="<%= department._id %>"><%= department.name %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="col-12 form-group">
+            <button class="btn btn-primary" type="submit">Save Employee</button>
+          </div>
+        </div>
+      </form>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">name</th>
+            <th scope="col">surname</th>
+            <th scope="col">department</th>
+            <th scope="col">action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% employees.forEach(employee=> { %>
+            <tr>
+              <td>
+                <%= employee.name %>
+              </td>
+              <td>
+                <%= employee.surname %>
+              </td>
+              <td>
+                <%= employee.department.name %>
+              </td>
+              <td>
+                <div class="d-flex g-5">
+                  <a class="mr-3" href="/employees/<%= employee._id  %>">
+                    <button class="btn btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                  </a>
+                  <form action="/employees/<%= employee._id  %>?_method=DELETE" method="post" style="display: inline;">
+                    <button class="btn btn-danger" type="submit"><i class="fa fa-trash-o"></i></button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+</html>
